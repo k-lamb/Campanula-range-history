@@ -1,0 +1,36 @@
+### only run once:
+# git clone https://github.com/isaacovercast/easySFS.git
+# cd easySFS
+# chmod 777 easySFS.py
+
+cd ~/easySFS
+
+# easySFS requires Chr information. modifying the VCF "easySFS_vcf.vcf" to make clear that chr=rad loci (1,2,3...n). if you use excel for this, you'll also need to fix the \n -> \t conversion error in the header
+
+# 65% missing, 50% individual filtered VCF (VCFtools)
+./easySFS.py -i ~/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/FINAL/demo_infer/easySFS/noTperf_65miss_50miss_FULL.recode.vcf -p ~/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/FINAL/demo_infer/easySFS/vcf_popmap.txt -o ~/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/FINAL/demo_infer/easySFS/output -f -a --preview
+
+# 65% missing, 50% individual filtered VCF (VCFtools) with lineages collated
+./easySFS.py -i ~/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/FINAL/demo_infer/easySFS/noTperf_65miss_50miss_FULL.recode.vcf -p ~/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/FINAL/demo_infer/easySFS/vcf_popmap_linreg.txt -o ~/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/FINAL/demo_infer/easySFS/output -f -a --preview
+
+
+
+# 80% missing, 50% individual filtered VCF (VCFtools) to explore effect of filtering on demographic inference
+./easySFS.py -i ~/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/FINAL/demo_infer/easySFS/noTperf_80miss_50miss_FULL.recode.vcf -p ~/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/FINAL/demo_infer/easySFS/vcf_popmap.txt -o ~/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/FINAL/demo_infer/easySFS/output -f -a --preview
+
+# 65% missing, 50% individual filtered VCF (VCFtools) with lineages collated
+./easySFS.py -i ~/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/FINAL/demo_infer/easySFS/noTperf_80miss_50miss_FULL.recode.vcf -p ~/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/FINAL/demo_infer/easySFS/vcf_popmap_linreg.txt -o ~/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/FINAL/demo_infer/easySFS/output -f -a --preview
+
+
+
+# No missing, 50% individual filtered VCF (VCFtools) to explore effect of filtering on demographic inference
+./easySFS.py -i ~/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/FINAL/VCF/noTperf_noSNPmissingcutoff_50miss.vcf -p ~/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/FINAL/demo_infer/easySFS/vcf_popmap.txt -o ~/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/FINAL/demo_infer/easySFS/output -f -a --preview
+
+
+
+# dustbin / deprecated / library:
+# bad dartR vcf (65% missing 50% individual filter)
+# ./easySFS.py -i ~/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/FINAL/demo_infer/easySFS/deprecated/noTperf_65miss_50indmiss.vcf -p ~/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/FINAL/demo_infer/easySFS/vcf_popmap.txt -o ~/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/FINAL/demo_infer/easySFS/output -f -a --preview
+# 
+# original VCF
+# ./easySFS.py -i ~/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/VCFs/vcf_dp_noTperf_noVA112_missing725.recode.vcf -p ~/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/VCFs/batch_90_p25_NoCpMt_popmap.txt -f -a --preview

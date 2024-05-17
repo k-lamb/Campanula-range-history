@@ -1,0 +1,5 @@
+cd ~/Dsuite
+# to run use: ./Build/Dsuite Dtrios
+
+# Dsuite can't output to proper directory if path has a space :P
+./Build/Dsuite Dtrios -c -n all_pops_ALLSNP ~/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/FINAL/VCF/Tperf_50miss_GENEFLOW.recode.vcf ~/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/FINAL/VCF/gene_flow/Tperf_outgroup_popmap.txt -o ~/Downloads/Dsuite_test/gene_flow_ALL

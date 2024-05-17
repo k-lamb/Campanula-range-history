@@ -1,0 +1,50 @@
+module load vcftools
+cd /scratch/ksl2za/VCF
+
+# initial filtering without missing cutoff. pop_rem contains ONLY T_perf samples (outgroup species)
+vcftools --vcf ./ddrad/batch_1_90_p25_NoCpMt.vcf --out /scratch/ksl2za/VCF/ddrad/noTperf --remove ./ddrad/Tperf_rem.txt --min-meanDP 10 --maf 0.01 --recode
+
+# remove missing individuals and apply cut off from missing_threshold.R
+vcftools --vcf ./ddrad/batch_1_90_p25_NoCpMt.vcf --out /scratch/ksl2za/VCF/ddrad/noTperf_65miss_50miss_FULL --max-missing 0.65 --remove ./ddrad/Tperf_rem.txt --remove ./ddrad/missing_list.txt --min-meanDP 10 --maf 0.01 --min-alleles 2 --max-alleles 2 --mac 1 --recode
+
+# remove missing individuals and apply cut off of 80% to see influence on demographic inference (3,568 SNPs)
+vcftools --vcf ./ddrad/batch_1_90_p25_NoCpMt.vcf --out /scratch/ksl2za/VCF/ddrad/noTperf_80miss_50miss_FULL --max-missing 0.8 --remove ./ddrad/Tperf_rem.txt --remove ./ddrad/missing_list.txt --min-meanDP 10 --maf 0.01 --min-alleles 2 --max-alleles 2 --mac 1 --recode
+
+
+
+# PLASTID VCF (identical filtering to Nuclear) -- 80% missing SNP & 50% individual missing
+vcftools --vcf ./ddrad/plastid/CpStacks_p25.vcf --out /scratch/ksl2za/VCF/ddrad/plastid/PLASTID_Tperf_80miss_50miss_FULL --max-missing 0.8 --remove ./ddrad/plastid/Chloroplast_missing_list.txt --min-meanDP 10 --maf 0.01 --min-alleles 2 --max-alleles 2 --mac 1 --recode
+
+# PLASTID VCF PHYLOGENY (UNCONSTRAINED for missing SNP)
+vcftools --vcf ./ddrad/plastid/CpStacks_p25.vcf --out /scratch/ksl2za/VCF/ddrad/plastid/PLASTID_Tperf_FULL --remove ./ddrad/plastid/Chloroplast_missing_list.txt --min-meanDP 10 --maf 0.01 --min-alleles 2 --max-alleles 2 --mac 1 --recode
+vcftools --vcf ./ddrad/plastid/CpStacks_p25.vcf --out /scratch/ksl2za/VCF/ddrad/plastid/PLASTID_Tperf_noMAFreal --remove ./ddrad/plastid/Chloroplast_missing_list.txt --min-meanDP 10 --min-alleles 2 --max-alleles 2 --mac 1 --recode
+
+
+
+# For Dsuite gene flow tests (subset) 65%
+vcftools --vcf ./ddrad/batch_1_90_p25_NoCpMt.vcf --out /scratch/ksl2za/VCF/ddrad/Tperf_65miss_50miss_GENEFLOW --max-missing 0.65 --remove ./ddrad/missing_list.txt --min-meanDP 10 --maf 0.01 --min-alleles 2 --max-alleles 2 --mac 1 --recode
+
+# For Dsuite gene flow tests and phylogenies (subset) 80%
+vcftools --vcf ./ddrad/batch_1_90_p25_NoCpMt.vcf --out /scratch/ksl2za/VCF/ddrad/Tperf_80miss_50miss_GENEFLOW --max-missing 0.8 --remove ./ddrad/missing_list.txt --min-meanDP 10 --maf 0.01 --min-alleles 2 --max-alleles 2 --mac 1 --recode
+
+
+# For Dsuite gene flow tests (no subset, just remove poor quality individuals) & PHYLOGENY (UNCONSTRAINED for missing SNP)
+vcftools --vcf ./ddrad/batch_1_90_p25_NoCpMt.vcf --out /scratch/ksl2za/VCF/ddrad/Tperf_50miss_GENEFLOW_ALL --remove ./ddrad/missing_list.txt --min-meanDP 10 --maf 0.01 --min-alleles 2 --max-alleles 2 --mac 1 --recode
+
+
+# for structure output
+cd /scratch/ksl2za/VCF/ddrad/reg_subset/
+
+module load gcc
+module load stacks
+
+populations -V /scratch/ksl2za/VCF/ddrad/reg_subset/NC_subset.vcf -O /scratch/ksl2za/VCF/ddrad/reg_subset/structure -M /scratch/ksl2za/VCF/ddrad/reg_subset/NC_subset_popmap.txt --write-single-snp --structure
+populations -V /scratch/ksl2za/VCF/ddrad/reg_subset/NC_subset.vcf -O /scratch/ksl2za/VCF/ddrad/reg_subset/structure --write-single-snp --structure
+
+# structure 
+# PA
+loci=2261 ind=67
+
+cd ~/Downloads/dentearl-structureHarvester-be5cabe
+python structureHarvester.py --dir=/Users/kericlamb/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/FINAL/Structure/data/PA_struct/AFind_PA/Results --out=/Users/kericlamb/Desktop/Documents/Research/Paper\ Code/Debban-Lamb/FINAL/Structure/data/PA_out
+python structureHarvester.py --dir=~/Downloads/dentearl-structureHarvester-be5cabe/PA_struct/ --out=~/Downloads/dentearl-structureHarvester-be5cabe/PA_out

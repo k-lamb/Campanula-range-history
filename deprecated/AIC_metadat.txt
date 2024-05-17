@@ -1,0 +1,5 @@
+NO_MIG
+MIG1
+SC1
+ONE_POP
+AM
